@@ -1,11 +1,9 @@
-# NOTE: This config is used when testing a rule
-
 # The elasticsearch hostname for metadata writeback
 # Note that every rule can have its own elasticsearch host
-es_host: localhost
+es_host: log.corp.reva.tech
 
 # The elasticsearch port
-es_port: 9200
+es_port: 443
 
 # This is the folder that contains the rule yaml files
 # Any .yaml file will be loaded as a rule
@@ -14,21 +12,21 @@ rules_folder: rules
 # How often ElastAlert will query elasticsearch
 # The unit can be anything from weeks to seconds
 run_every:
-  seconds: 5
+  minutes: 1
 
 # ElastAlert will buffer results from the most recent
 # period of time, in case some log sources are not in real time
 buffer_time:
-  minutes: 1
+  minutes: 2
 
 # Optional URL prefix for elasticsearch
 #es_url_prefix: elasticsearch
 
 # Connect with TLS to elasticsearch
-#use_ssl: True
+use_ssl: True
 
 # Verify TLS certificates
-#verify_certs: True
+verify_certs: True
 
 # GET request with body is the default option for Elasticsearch.
 # If it fails for some reason, you can pass 'GET', 'POST' or 'source'.
@@ -48,4 +46,4 @@ writeback_index: elastalert_status
 # If an alert fails for some reason, ElastAlert will retry
 # sending the alert until this time period has elapsed
 alert_time_limit:
-  days: 2
+  days: 1

@@ -19,7 +19,11 @@ RUN apk add --update --no-cache ca-certificates openssl-dev openssl python3-dev 
 WORKDIR "${ELASTALERT_HOME}"
 
 # This is needed to fix Only timezones from the pytz library are supported - https://github.com/Yelp/elastalert/issues/2968
-RUN cat setup.py && sed -i "s/install_requires\=\[/install_requires\=\[\'tzlocal\<3.0\\',/" setup.py && cat setup.py
+# Dependencies are coming from https://github.com/Yelp/elastalert/blob/master/requirements.txt
+RUN cat setup.py && \
+  sed -i "s/install_requires\=\[/install_requires\=\[\'tzlocal\<3.0\\',/" setup.py && \
+  sed -i "s/'PyYAML>=3.12'/'PyYAML>=5.1'/" setup.py && \
+  cat setup.py
 RUN python3 setup.py install
 
 FROM node:alpine
